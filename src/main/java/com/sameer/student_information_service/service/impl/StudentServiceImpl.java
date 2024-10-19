@@ -34,7 +34,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentDTO getStudentById(int studentId) {
-       log.info("Retrieving student");
+       log.info("Retrieving student.");
         log.info("Student Id: {}", studentId);
       Student student =  repository.getReferenceById(String.valueOf(studentId));
       ModelMapper mapper = new ModelMapper();
