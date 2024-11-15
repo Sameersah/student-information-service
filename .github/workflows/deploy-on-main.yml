@@ -1,0 +1,33 @@
+name: Build and Deploy to Local Machine
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: self-hosted
+
+    steps:
+
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+
+      - name: Build Docker Image
+        run: |
+          docker build -t student-information-service:latest .
+
+
+      - name: Stop Existing Container
+        run: |
+          if [ "$(docker ps -q -f name=student-information-service)" ]; then
+            docker stop student-information-service
+            docker rm student-information-service
+          fi
+
+
+      - name: Run Docker Container
+        run: |
+          docker run -d --name student-information-service -p 8083:8083 student-information-service:latest
